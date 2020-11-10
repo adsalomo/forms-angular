@@ -67,6 +67,8 @@ export class ReactiveComponent implements OnInit {
       hobbies: this.fb.array([
 
       ])
+    }, {
+      validators: this.validators.passwordsEquals('password', 'password2')
     });
   }
 
