@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { resolve } from 'dns';
+import { Observable } from 'rxjs';
+
+interface ErrorValidate {
+  [s: string]: boolean
+}
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +14,7 @@ export class ValidatorsService {
 
   constructor() { }
 
-  noLopez(control: FormControl): { [s: string]: boolean } {
+  noLopez(control: FormControl): ErrorValidate {
 
     if (control.value?.toLowerCase() === "lopez") {
       return {
@@ -32,4 +38,21 @@ export class ValidatorsService {
       }
     }
   }
+
+  existsUser(control: FormControl): Promise<ErrorValidate> | Observable<ErrorValidate> {
+    if (!control.value) {
+      return Promise.resolve(null);
+    }
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === 'adsalomo') {
+          resolve({ exists: true });
+        } else {
+          resolve(null);
+        }
+      }, 3000)
+    })
+  }
+
 }

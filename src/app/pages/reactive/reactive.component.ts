@@ -14,6 +14,7 @@ export class ReactiveComponent implements OnInit {
   constructor(private fb: FormBuilder, private validators: ValidatorsService) {
     this.createForm();
     this.loadData();
+    this.createListeners();
   }
 
   ngOnInit(): void {
@@ -29,6 +30,10 @@ export class ReactiveComponent implements OnInit {
 
   get emailInvalid() {
     return this.form.get('email').invalid && this.form.get('email').touched;
+  }
+
+  get userInvalid() {
+    return this.form.get('user').invalid && this.form.get('user').touched;
   }
 
   get passwordInvalid() {
@@ -58,6 +63,7 @@ export class ReactiveComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(5)]],
       lastName: ['', [Validators.required, Validators.minLength(5), this.validators.noLopez]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      user: ['', , this.validators.existsUser],
       password: ['', Validators.required],
       password2: ['', Validators.required],
       address: this.fb.group({
@@ -78,6 +84,8 @@ export class ReactiveComponent implements OnInit {
       name: 'Joe Joe',
       lastName: 'Doe Doe',
       email: 'jondoe@gmail.com',
+      password: '123456',
+      password2: '123456',
       address: {
         country: 'Estambul',
         city: 'Kanzas'
@@ -106,6 +114,20 @@ export class ReactiveComponent implements OnInit {
 
   deleteHobby(i: number) {
     this.hobbies.removeAt(i);
+  }
+
+  createListeners() {
+    this.form.valueChanges.subscribe(value => {
+      console.log(value);
+    });
+
+    this.form.statusChanges.subscribe(value => {
+      console.log(value);
+    });
+
+    this.form.get('name').valueChanges.subscribe(value => {
+      console.log(value);
+    });
   }
 
 }
