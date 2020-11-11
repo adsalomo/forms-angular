@@ -1,0 +1,29 @@
+-- instalar typescript
+npm install -g typescript
+
+-- angular cli
+npm install -g @angular/cli
+ng --version
+
+-- run app
+ng serve -o
+
+-- crear un componente
+ng g c shared/header --skipTests
+
+-- servicio
+ng g s services/dataPage --skipTests
+
+-- build
+ng build --prod
+
+-- server
+npm i http-server
+
+-- run: dentro de dist
+http-server -o
+
+-- crear guard
+ng g guard guards/auth
+
+npm install sweetalert2@v9.11.0
